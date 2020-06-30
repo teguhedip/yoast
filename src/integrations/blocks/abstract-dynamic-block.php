@@ -19,23 +19,15 @@ abstract class Dynamic_Block implements Integration_Interface {
 	protected $block_name;
 
 	/**
-	 * @var Abstract_Presenter A presenter to render the block.
+	 * @var string the editor script for the block.
 	 */
-	private $presenter;
+	protected $script;
 
 	/**
 	 * @inheritDoc
 	 */
 	public static function get_conditionals() {
 		return [];
-	}
-
-	/**
-	 * Block constructor.
-	 * @param Abstract_Presenter $presenter A presenter to render the block.
-	 */
-	public function __construct( Abstract_Presenter $presenter ) {
-		$this->presenter = $presenter;
 	}
 
 	/**
@@ -51,8 +43,16 @@ abstract class Dynamic_Block implements Integration_Interface {
 	 */
 	public function register_block() {
 		register_block_type( 'yoast-seo/' . $this->block_name, array(
-			'editor_script' => \WPSEO_Admin_Asset_Manager::PREFIX . 'dynamic-blocks',
-			'render_callback' => [ $this->presenter, 'present' ],
+			'editor_script' => $this->script,
+			'render_callback' => [ $this, 'present' ],
 		) );
 	}
+
+	/**
+	 * Presents the block output. This is abstract because in the loop we need to be able to build the data for the
+	 * presenter in the last moment.
+	 *
+	 * @return string The block output.
+	 */
+	abstract public function present();
 }

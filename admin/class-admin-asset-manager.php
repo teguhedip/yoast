@@ -514,13 +514,6 @@ class WPSEO_Admin_Asset_Manager {
 				],
 			],
 			[
-				'name' => 'dynamic-blocks',
-				'src'  => 'dynamic-blocks-' . $flat_version,
-				'deps' => [
-					'wp-blocks',
-				]
-			],
-			[
 				'name' => 'structured-data-blocks',
 				'src'  => 'wp-seo-structured-data-blocks-' . $flat_version,
 				'deps' => [
